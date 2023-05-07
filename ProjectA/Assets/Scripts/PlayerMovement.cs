@@ -5,9 +5,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody2D rb;
-    public float moveSpeed = 5f;
-    public float jumpForce = 5f;
+    public float groundCheckRadius;  //for grounded state
+    public Transform groundCheck;
+    public LayerMask groundMask;
+    public bool isGrounded; 
+
+    private float jumpCount = 0;
+    public float maxJumpCount;
+
+    public Rigidbody2D rb; 
+    public float moveSpeed;
+    public float jumpForce;
     public PlayerInputActions playerControls;
 
     Vector2 moveDirection = Vector2.zero;
@@ -39,17 +47,29 @@ public class PlayerMovement : MonoBehaviour
     {
         move.Disable();
         fire.Disable();
+        jump.Disable();
     }
 
     void Update()
     {
         moveDirection = move.ReadValue<Vector2>();
 
+
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundMask);
+
+        if(isGrounded)
+        {
+            jumpCount = 0;
+        }
+        
+
     }
 
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
+        
+        Debug.Log(jumpCount);
     }
 
     private void Fire(InputAction.CallbackContext context)
@@ -59,6 +79,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext context)
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
+        if(jumpCount < maxJumpCount){
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            jumpCount++;
+        }
     }
 }
