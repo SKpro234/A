@@ -5,9 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float groundCheckRadius;  //for grounded state
-    public Transform groundCheck;
-    public LayerMask groundMask;
     public bool isGrounded; 
 
     private float jumpCount = 0;
@@ -55,8 +52,7 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = move.ReadValue<Vector2>();
 
 
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundMask);
-
+        isGrounded = IsGrounded();
         if(isGrounded)
         {
             jumpCount = 0;
@@ -72,6 +68,10 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(jumpCount);
     }
 
+    public bool IsGrounded(){
+        return transform.Find("GroundCheck").GetComponent<GroundCheck>().isGrounded;
+    }
+
     private void Fire(InputAction.CallbackContext context)
     {
         Debug.Log("boom");
@@ -80,7 +80,10 @@ public class PlayerMovement : MonoBehaviour
     private void Jump(InputAction.CallbackContext context)
     {
 
-        if(jumpCount < maxJumpCount){
+        if(isGrounded){
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+        else if(jumpCount < maxJumpCount){
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpCount++;
         }
