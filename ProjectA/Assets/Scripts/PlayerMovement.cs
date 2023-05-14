@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb; 
     public float moveSpeed;
     public float jumpForce;
+    private bool isJumping;
     public PlayerInputActions playerControls;
 
     Vector2 moveDirection = Vector2.zero;
@@ -62,30 +63,44 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(isDashing){
+        if(isDashing)
+        {
             return;
         }
         moveDirection = move.ReadValue<Vector2>();
         isGrounded = IsGrounded();
-        if(isGrounded)
+        if(isGrounded && jumpCount != 0)
         {
             jumpCount = 0;
+            isJumping = false;
         }          
         Flip();
-    
+        
+        if(jump.ReadValue<float>() == 0 && isJumping == true && rb.velocity.y > 0)   // 1 space is held down, 0 not held down
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            isJumping = false;
+        }
+
+
+        Debug.Log(isJumping);
+
+
+
     }
 
     private void FixedUpdate()
     {
-        if(isDashing){
+        if(isDashing)
+        {
             return;
         }
         rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
         
-        Debug.Log(jumpCount);
     }
 
-    public bool IsGrounded(){
+    public bool IsGrounded()
+    {
         return transform.Find("GroundCheck").GetComponent<GroundCheck>().isGrounded;
     }
 
@@ -97,23 +112,29 @@ public class PlayerMovement : MonoBehaviour
     private void Jump(InputAction.CallbackContext context)
     {
 
-        if(isGrounded){
+        if(isGrounded)
+        {
+            isJumping = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
-        else if(jumpCount < maxJumpCount){
+        else if(jumpCount < maxJumpCount)
+        {
+            isJumping = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpCount++;
         }
     }
     private void Dash(InputAction.CallbackContext context)
     {
-        if(canDash){
+        if(canDash)
+        {
             StartCoroutine(Dash());
         }
     }
 
     private void Flip(){
-        if (isFacingRight && moveDirection.x < 0f || !isFacingRight && moveDirection.x > 0f){
+        if (isFacingRight && moveDirection.x < 0f || !isFacingRight && moveDirection.x > 0f)
+        {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
