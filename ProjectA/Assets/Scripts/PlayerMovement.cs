@@ -30,8 +30,11 @@ public class PlayerMovement : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
 
-    private float coyoteTime = 0.1f;
+    public float coyoteTime = 0.1f;
     private float coyoteTimeCounter;
+
+    public float jumpBufferTime = 0.5f;
+    private float jumpBufferCounter;
 
     private void Awake()
     {
@@ -72,12 +75,12 @@ public class PlayerMovement : MonoBehaviour
         }
         moveDirection = move.ReadValue<Vector2>();
         isGrounded = IsGrounded();
-        if(isGrounded && jumpCount != 0)
+        if(isGrounded && jumpCount != 0) //grounded reset state
         {
             jumpCount = 0;
             isJumping = false;
         }          
-        if(isGrounded)
+        if(isGrounded) //coyote time
         {
             coyoteTimeCounter = coyoteTime;
         }          
@@ -85,13 +88,22 @@ public class PlayerMovement : MonoBehaviour
         {
             coyoteTimeCounter -= Time.deltaTime;
         }
+
+        if(jumpBufferCounter > 0f && isGrounded)
+        {
+            isJumping = true;
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            jumpBufferCounter = 0f;
+        }
+
+        jumpBufferCounter -= Time.deltaTime; //jump buffer
+        
         Flip();
         
         if(jump.ReadValue<float>() == 0 && isJumping == true && rb.velocity.y > 0)   // 1 space is held down, 0 not held down
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y/2);
-
-            
+            coyoteTimeCounter = 0;
             isJumping = false;
         }
 
@@ -124,11 +136,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext context)
     {
-
+        jumpBufferCounter = jumpBufferTime;
         if(coyoteTimeCounter > 0f)
         {
             isJumping = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            jumpBufferCounter = 0f;
         }
         else if(jumpCount < maxJumpCount)
         {

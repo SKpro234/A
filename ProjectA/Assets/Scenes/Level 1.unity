@@ -1031,6 +1031,8 @@ MonoBehaviour:
   rb: {fileID: 1243823151}
   moveSpeed: 6
   jumpForce: 15
+  coyoteTime: 0.1
+  jumpBufferTime: 0.1
 --- !u!1 &1896845348
 GameObject:
   m_ObjectHideFlags: 0
