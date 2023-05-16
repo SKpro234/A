@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
 
+    private float coyoteTime = 0.1f;
+    private float coyoteTimeCounter;
+
     private void Awake()
     {
         playerControls = new PlayerInputActions();
@@ -74,6 +77,14 @@ public class PlayerMovement : MonoBehaviour
             jumpCount = 0;
             isJumping = false;
         }          
+        if(isGrounded)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }          
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
         Flip();
         
         if(jump.ReadValue<float>() == 0 && isJumping == true && rb.velocity.y > 0)   // 1 space is held down, 0 not held down
@@ -114,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jump(InputAction.CallbackContext context)
     {
 
-        if(isGrounded)
+        if(coyoteTimeCounter > 0f)
         {
             isJumping = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
