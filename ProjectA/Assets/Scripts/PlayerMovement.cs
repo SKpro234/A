@@ -78,7 +78,9 @@ public class PlayerMovement : MonoBehaviour
         
         if(jump.ReadValue<float>() == 0 && isJumping == true && rb.velocity.y > 0)   // 1 space is held down, 0 not held down
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y/2);
+
+            
             isJumping = false;
         }
 
