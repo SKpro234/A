@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private Animator anim;
+
     public bool isGrounded; 
 
     private float jumpCount = 0;
@@ -35,6 +37,11 @@ public class PlayerMovement : MonoBehaviour
 
     public float jumpBufferTime = 0.5f;
     private float jumpBufferCounter;
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     private void Awake()
     {
@@ -74,6 +81,14 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         moveDirection = move.ReadValue<Vector2>();
+        if (move.ReadValue<Vector2>().x != 0f)
+        {
+            anim.SetBool("running", true);
+        }
+        else
+        {
+            anim.SetBool("running", false);
+        }
         isGrounded = IsGrounded();
         if(isGrounded && jumpCount != 0) //grounded reset state
         {
@@ -108,7 +123,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        Debug.Log(isJumping);
 
 
 
