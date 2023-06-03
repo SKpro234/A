@@ -1028,7 +1028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrounded: 0
-  maxJumpCount: 0
+  maxJumpCount: 1
   rb: {fileID: 1243823151}
   moveSpeed: 6
   jumpForce: 15
