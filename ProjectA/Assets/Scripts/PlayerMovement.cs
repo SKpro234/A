@@ -78,8 +78,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isDashing)
         {
+            anim.SetBool("isrolling", true);
             return;
         }
+            anim.SetBool("isrolling", false);
         isGrounded = IsGrounded();
         moveDirection = move.ReadValue<Vector2>();
         if (move.ReadValue<Vector2>().x != 0f)
@@ -90,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetBool("running", false);
         }
-        if(rb.velocity.y < 0)
+        if(rb.velocity.y < 0 && !isGrounded)
         {
             anim.SetBool("isjumping", false);
             anim.SetBool("isfalling", true);
