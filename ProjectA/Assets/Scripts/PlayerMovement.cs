@@ -80,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+        isGrounded = IsGrounded();
         moveDirection = move.ReadValue<Vector2>();
         if (move.ReadValue<Vector2>().x != 0f)
         {
@@ -89,7 +90,21 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetBool("running", false);
         }
-        isGrounded = IsGrounded();
+        if(rb.velocity.y < 0)
+        {
+            anim.SetBool("isjumping", false);
+            anim.SetBool("isfalling", true);
+        }
+        else if(isJumping == true)
+        {
+            anim.SetBool("isjumping", true);
+            anim.SetBool("isfalling", false);
+        }
+        if(isGrounded)
+        {
+            anim.SetBool("isjumping", false);
+            anim.SetBool("isfalling", false);
+        }
         if(isGrounded && jumpCount != 0) //grounded reset state
         {
             jumpCount = 0;
