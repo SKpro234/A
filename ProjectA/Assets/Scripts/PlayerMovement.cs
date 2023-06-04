@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     Vector2 moveDirection = Vector2.zero;
 
     private InputAction move;
-    private InputAction fire;
     private InputAction jump;
     private InputAction dash;
 
@@ -53,9 +52,6 @@ public class PlayerMovement : MonoBehaviour
         move = playerControls.Player.Move;
         move.Enable();
 
-        fire = playerControls.Player.Fire;
-        fire.Enable();
-        fire.performed += Fire;
 
         jump = playerControls.Player.Jump;
         jump.Enable();
@@ -69,7 +65,6 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         move.Disable();
-        fire.Disable();
         jump.Disable();
         dash.Disable();
     }
@@ -78,10 +73,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isDashing)
         {
-            anim.SetBool("isrolling", true);
             return;
         }
-            anim.SetBool("isrolling", false);
         isGrounded = IsGrounded();
         moveDirection = move.ReadValue<Vector2>();
         if (move.ReadValue<Vector2>().x != 0f)
@@ -160,10 +153,6 @@ public class PlayerMovement : MonoBehaviour
         return transform.Find("GroundCheck").GetComponent<GroundCheck>().isGrounded;
     }
 
-    private void Fire(InputAction.CallbackContext context)
-    {
-        Debug.Log("boom");
-    }
 
     private void Jump(InputAction.CallbackContext context)
     {
@@ -201,6 +190,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Dash()
     {
+        
+        anim.SetBool("isrolling", true);
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;
@@ -209,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashingTime);
         rb.gravityScale = originalGravity;
         isDashing = false;
+        anim.SetBool("isrolling", false);
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
