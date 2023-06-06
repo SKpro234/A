@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpCount = 0;
     public float maxJumpCount;
 
-    private bool isFacingRight = true;
+    public bool isFacingRight = true;
     public Rigidbody2D rb; 
     public float moveSpeed;
     public float jumpForce;

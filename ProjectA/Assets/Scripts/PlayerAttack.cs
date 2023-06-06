@@ -10,6 +10,14 @@ public class PlayerAttack : MonoBehaviour
     public Rigidbody2D rb; 
     public PlayerInputActions playerControls;
 
+
+    public int damage = 1;
+
+    public PlayerMovement Player;
+    public LayerMask Enemies;
+    public Vector2 attackRange;
+    private Collider2D[] enemiesToDamage;
+
     private InputAction fire;
 
     private void Start()
@@ -44,6 +52,33 @@ public class PlayerAttack : MonoBehaviour
     private void Fire(InputAction.CallbackContext context)
     {
         anim.SetTrigger("attack");
+        if(Player.GetComponent<PlayerMovement>().isFacingRight)
+        {
+        enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(transform.position.x + 0.7f, transform.position.y + 0.69f),
+        attackRange, 0, Enemies);
+        }
+        else
+        {
+        enemiesToDamage = Physics2D.OverlapBoxAll(new Vector2(transform.position.x - 0.7f, transform.position.y + 0.69f),
+        attackRange, 0, Enemies);
+        }
+        for(int i = 0; i < enemiesToDamage.Length; i++)
+        {
+            enemiesToDamage[i].GetComponent<EnemyHealth>().TakeDamage(damage);
+        }
+
+    }
+
+    void OnDrawGizmosSelected(){
+        Gizmos.color = Color.red;
+        if(Player.GetComponent<PlayerMovement>().isFacingRight)
+        {
+        Gizmos.DrawWireCube(new Vector3(transform.position.x + 0.7f, transform.position.y + 0.69f, transform.position.z), attackRange);
+        }
+        else
+        {
+        Gizmos.DrawWireCube(new Vector3(transform.position.x - 0.7f, transform.position.y + 0.69f, transform.position.z), attackRange);
+        }
     }
 
     
