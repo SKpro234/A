@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
     private Animator anim;
 
     public bool dead = false;
-    public int maxHealth;
+    public int maxHealth = 3;
     public int currentHealth;
     // Start is called before the first frame update
     void Start()
@@ -28,13 +28,13 @@ public class EnemyHealth : MonoBehaviour
         if(currentHealth <= 0 && !dead)
         {
             dead = true;
-            StartCoroutine(Die());
+            StartCoroutine(Die());  
         }
     }
 
     private IEnumerator Die()
     {
-        anim.SetTrigger("dead");
+        anim.SetTrigger("dies");
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         Destroy(gameObject);
     }

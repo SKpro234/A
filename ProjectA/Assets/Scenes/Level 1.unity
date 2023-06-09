@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 395790339}
   - component: {fileID: 395790343}
   - component: {fileID: 395790344}
+  - component: {fileID: 395790345}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Untagged
@@ -294,6 +295,20 @@ MonoBehaviour:
   dead: 0
   maxHealth: 3
   currentHealth: 0
+--- !u!114 &395790345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395790338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af322d5fc65437c48bb9d6691258c1dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  playerHealth: {fileID: 1243823157}
 --- !u!1 &561470458
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,12 +1047,13 @@ GameObject:
   - component: {fileID: 1243823152}
   - component: {fileID: 1243823154}
   - component: {fileID: 1243823156}
+  - component: {fileID: 1243823157}
   - component: {fileID: 1243823151}
   - component: {fileID: 1243823153}
   - component: {fileID: 1243823155}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1247,6 +1263,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attackRange: {x: 1.55, y: 1.3}
+--- !u!114 &1243823157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243823148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18053cb9cbc9a8a419908493ad086bb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dead: 0
+  maxHealth: 5
+  currentHealth: 0
 --- !u!1 &1896845348
 GameObject:
   m_ObjectHideFlags: 0
