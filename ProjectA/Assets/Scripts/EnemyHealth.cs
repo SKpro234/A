@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     private Animator anim;
+    [SerializeField] public SlimeBehavior behavior;
 
     public bool dead = false;
     public int maxHealth;
@@ -35,6 +36,7 @@ public class EnemyHealth : MonoBehaviour
     private IEnumerator Die()
     {
         anim.SetTrigger("dead");
+        behavior.moveSpeed = 0;
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         Destroy(gameObject);
     }

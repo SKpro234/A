@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45cb2b2c28f6997448488c924e9cdfa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  behavior: {fileID: 3020917797228311673}
   dead: 0
   maxHealth: 3
   currentHealth: 0
@@ -187,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  playerHealth: {fileID: 0}
+  playerHealth: {fileID: 616672322931765626, guid: c9b7e1368ffb62e43a327eab3ae11854, type: 3}
 --- !u!114 &3020917797228311673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6cc130c23abb0044bc33c2aeb88c5dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 3
   bc: {fileID: 3020917798343289745}
 --- !u!1 &3020917798343289746
 GameObject:

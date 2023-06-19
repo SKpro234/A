@@ -6,7 +6,7 @@ public class SlimeBehavior : MonoBehaviour
 {
     private Animator anim;
 
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] public float moveSpeed = 5f;
     
     Rigidbody2D rb;
     public BoxCollider2D bc;
