@@ -388,6 +388,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3020917797228311673, guid: 5af3fbed93789f04fb64de4096f0b4f6, type: 3}
+      propertyPath: KnockBackSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3020917797228311673, guid: 5af3fbed93789f04fb64de4096f0b4f6, type: 3}
+      propertyPath: KnockBackLength
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3020917797228311674, guid: 5af3fbed93789f04fb64de4096f0b4f6, type: 3}
       propertyPath: playerHealth
       value: 

@@ -6,33 +6,67 @@ public class SlimeBehavior : MonoBehaviour
 {
     private Animator anim;
 
-    [SerializeField] public float moveSpeed = 5f;
-    
+    public float moveSpeed = 1f;
     Rigidbody2D rb;
     public BoxCollider2D bc;
+    public PlayerMovement playerMovement;
+
+    public float KnockBackLength = 0.1f;
+    public float KnockBackSpeed = 8f;
+    public bool isKnockBack;
 
     // Start is called before the first frame update
     void Start()
     {
+        isKnockBack = false;
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            playerMovement = player.GetComponent<PlayerMovement>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!isKnockBack){
+            if(isFacingLeft())
+            {
+                rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+                anim.SetBool("iswalking", true);
+            }
+            else
+            {
+                rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+                anim.SetBool("iswalking", true);
+            }
+        }
+    
+    }
 
-        if(isFacingLeft())
+    public void KnockBack()
+    {
+        isKnockBack = true;
+        StartCoroutine(kb());
+    }
+
+    private IEnumerator kb()
+    {
+        
+        if(playerMovement.isFacingRight)
         {
-            rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
-            anim.SetBool("iswalking", true);
+            rb.velocity = new Vector2(KnockBackSpeed, 0);
         }
         else
         {
-            rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
-            anim.SetBool("iswalking", true);
+            rb.velocity = new Vector2(-KnockBackSpeed, 0);
         }
+        yield return new WaitForSeconds(KnockBackLength);
+        isKnockBack = false;
     }
+
 
     private bool isFacingLeft()
     {

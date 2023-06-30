@@ -9,7 +9,11 @@ public class EnemyContactDamage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            playerHealth = player.GetComponent<PlayerHealth>();
+        }
     }
 
     // Update is called once per frame

@@ -26,6 +26,7 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
+        behavior.KnockBack();
         if(currentHealth <= 0 && !dead)
         {
             dead = true;
