@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Vector3 Pposition;
+
     private Animator anim;
 
     public bool isGrounded; 
@@ -71,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        Pposition = gameObject.transform.position;
+
         if(isDashing)
         {
             return;

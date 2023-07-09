@@ -6,6 +6,7 @@ public class EnemyHealth : MonoBehaviour
 {
     private Animator anim;
     [SerializeField] public SlimeBehavior behavior;
+    [SerializeField] public RatBehavior RatBehavior;
 
     public bool dead = false;
     public int maxHealth;
@@ -26,7 +27,15 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
-        behavior.KnockBack();
+        if(behavior != null)
+        {
+            behavior.KnockBack();
+        }
+        else
+        {
+            RatBehavior.KnockBack();
+        }
+        
         if(currentHealth <= 0 && !dead)
         {
             dead = true;
